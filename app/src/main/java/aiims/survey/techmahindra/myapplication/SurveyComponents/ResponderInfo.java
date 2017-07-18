@@ -1,10 +1,12 @@
 package aiims.survey.techmahindra.myapplication.SurveyComponents;
 
+import java.io.Serializable;
+
 /**
  * Created by yashjain on 7/4/17.
  */
 
-public class ResponderInfo {
+public class ResponderInfo implements Serializable {
 
     private String fName;
     private String lName;

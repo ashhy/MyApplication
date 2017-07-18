@@ -1,8 +1,10 @@
 package aiims.survey.techmahindra.myapplication.Database;
 
 import android.content.ContentValues;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -56,7 +58,7 @@ public class ResponseTable implements DbConstants{
         values.put(COL_HEIGHT,responderInfo.getHeight());
         values.put(COL_ADDRESS,responderInfo.getAddress());
         values.put(COL_AGE,responderInfo.getAge());
-        return db.insertOrThrow(TABLE_RESPONSE,null,values);
+        return db.insert(TABLE_RESPONSE, null, values);
     }
 
     public int removeResponse(String synced){
@@ -113,8 +115,11 @@ public class ResponseTable implements DbConstants{
     public ArrayList<Response> getResponse(String synced){
         String[] projection={COL_RID,COL_SID,COL_USERID,COL_LANGUAGE,COL_VERSION,COL_LATITUDE,COL_LONGITUDE,COL_ALTITUDE,COL_SYNCED,COL_RESULT,COL_FNAME,COL_LNAME,COL_GENDER,COL_BLOODG,COL_WEIGHT,COL_HEIGHT,COL_ADDRESS,COL_AGE};
         String selection=COL_SYNCED+" = ?";
-        Cursor cursor=db.query(TABLE_RESPONSE,projection,selection,new String[]{synced},null,null,null);
         ArrayList<Response> responseList=new ArrayList<>();
+        Log.d("SYNC", synced);
+        if (db == null) Log.d("Db is ", "NULL");
+        Cursor cursor = db.query(TABLE_RESPONSE, projection, selection, new String[]{synced}, null, null, null);
+        if (cursor == null) return responseList;
         Gson gson=new Gson();
         while(cursor.moveToNext()){
             Response response=new Response();
@@ -128,7 +133,7 @@ public class ResponseTable implements DbConstants{
             response.setLongitude(cursor.getFloat(cursor.getColumnIndexOrThrow(COL_LONGITUDE)));
             response.setAltitude(cursor.getFloat(cursor.getColumnIndexOrThrow(COL_ALTITUDE)));
             response.setSynced(cursor.getString(cursor.getColumnIndexOrThrow(COL_SYNCED)));
-            response.setResult(gson.fromJson(cursor.getString(cursor.getColumnIndexOrThrow(COL_RESULT)), JSONArray.class));
+            response.setResult(cursor.getString(cursor.getColumnIndexOrThrow(COL_RESULT)));
             responderInfo.setfName(cursor.getString(cursor.getColumnIndexOrThrow(COL_FNAME)));
             responderInfo.setlName(cursor.getString(cursor.getColumnIndexOrThrow(COL_LNAME)));
             responderInfo.setGender(cursor.getString(cursor.getColumnIndexOrThrow(COL_GENDER)));

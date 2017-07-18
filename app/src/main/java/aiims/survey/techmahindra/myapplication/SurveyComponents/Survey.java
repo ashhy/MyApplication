@@ -1,10 +1,12 @@
 package aiims.survey.techmahindra.myapplication.SurveyComponents;
 
+import java.io.Serializable;
+
 /**
  * Created by yashjain on 7/4/17.
  */
 
-public class Survey {
+public class Survey implements Serializable {
 
     public final static String TYPE_NATIONAL="national";
     public final static String TYPE_INTERNATIONAL="international";

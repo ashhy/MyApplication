@@ -5,4 +5,16 @@ package aiims.survey.techmahindra.myapplication.NetworkComponents;
  */
 
 public class LoginResult {
+    private String success;
+
+    public LoginResult() {
+    }
+
+    public String getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(String success) {
+        this.success = success;
+    }
 }

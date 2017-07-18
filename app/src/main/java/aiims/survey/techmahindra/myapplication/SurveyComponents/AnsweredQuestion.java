@@ -1,36 +1,38 @@
 package aiims.survey.techmahindra.myapplication.SurveyComponents;
 
+import android.util.Log;
+
+import com.android.volley.toolbox.StringRequest;
+import com.google.gson.annotations.Expose;
+
+import java.util.ArrayList;
+
 /**
  * Created by yashjain on 7/6/17.
  */
 
 public class AnsweredQuestion extends Question {
 
-    private String[] answer;
-    private int oNo;
+    private ArrayList<String> answer;
 
-    public boolean isAnswered(){
-        return oNo==-1;
+    @Expose
+    private int viewId;
+
+    public AnsweredQuestion() {
+        answer = new ArrayList<String>();
+        //Required to Set if Question is UnAnswered
     }
 
 
     /*Constructor*/
 
-    public AnsweredQuestion(){
-        this.oNo=-1;//Required to Set if Question is UnAnswered
-    }
-
-    public AnsweredQuestion(Question question,String[] answer,int oNo){
+    public AnsweredQuestion(Question question) {
         super(question);
-        this.answer = answer;
-        if(answer==null)
-            this.oNo=-1;
-        else if(answer.length==0)
-            this.oNo=-1;
-        else
-            this.oNo = oNo;
     }
 
+    public boolean isAnswered() {
+        return answer.isEmpty();
+    }
     /*Getter and Setter*/
 
     public Question getQuestion() {
@@ -48,21 +50,50 @@ public class AnsweredQuestion extends Question {
         this.resolver=question.resolver;
     }
 
-    public String[] getAnswer() {
+    public ArrayList<String> getAnswer() {
         return answer;
     }
 
-    public void setAnswer(String[] answer) {
+    public void setAnswer(ArrayList<String> answer) {
         this.answer = answer;
-        if(answer==null)
-            this.oNo=-1;
     }
 
-    public int getoNo() {
-        return oNo;
+    public String getSingleAnswer() {
+        return answer.get(0);
     }
 
-    public void setoNo(int oNo) {
-        this.oNo = oNo;
+    public void addAnswer(String answer) {
+        if (isMultiSelect()) {
+            this.answer.add(answer);
+        } else {
+            this.answer.clear();
+            this.answer.add(answer);
+        }
+
+        Log.i("ANSWER ADDED TO Q " + qText, answer);
+    }
+
+    public void removeAnswer(String answer) {
+        if (isMultiSelect()) {
+            ArrayList<String> newAnswer = new ArrayList<>();
+            for (String s : this.answer) {
+                if (!answer.equals(s)) {
+                    newAnswer.add(s);
+                }
+            }
+            this.answer = newAnswer;
+        } else {
+            if (answer.equals(this.answer.get(0))) {
+                this.answer.clear();
+            }
+        }
+    }
+
+    public int getViewId() {
+        return viewId;
+    }
+
+    public void setViewId(int viewId) {
+        this.viewId = viewId;
     }
 }

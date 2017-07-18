@@ -31,6 +31,10 @@ public class QuestionResult {
         return new Gson().fromJson(result,QuestionResult.class);
     }
 
+    public void setQuestions(ArrayList<Question> questions) {
+        this.questions = questions.toArray(new Question[questions.size()]);
+    }
+
     public String getSuccess() {
         return success;
     }

@@ -13,8 +13,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import aiims.survey.techmahindra.myapplication.Database.DbConstants;
+import aiims.survey.techmahindra.myapplication.Database.ResponseTable;
+import aiims.survey.techmahindra.myapplication.Database.SurveyDbOpenHelper;
 import aiims.survey.techmahindra.myapplication.SharedPreferences.SharedPrefManager;
 import aiims.survey.techmahindra.myapplication.SurveyComponents.Survey;
+
+import static aiims.survey.techmahindra.myapplication.SharedPreferences.SharedPrefManager.KEY_PASSWORD;
+import static aiims.survey.techmahindra.myapplication.SharedPreferences.SharedPrefManager.KEY_USERNAME;
 
 /**
  * Created by yashjain on 7/8/17.
@@ -27,6 +33,7 @@ public class SurveySync {
     private static final String URL_SURVEY_SYNC="";
     private static final String URL_QUESTION_SYNC="";
     private static final String URL_RESPONE_SYNC="";
+    private static final String URL_LOGIN = "";
 
     private Context applicationContext;
     private RequestHandler requestHandler;
@@ -66,7 +73,7 @@ public class SurveySync {
                 Map<String,String> map=new HashMap<>();
                 SurveyRequest surveyRequest=new SurveyRequest(applicationContext);
                 map.put(SurveyRequest.KEY_SURVEY_REQUEST,new Gson().toJson(surveyRequest,SurveyRequest.class));
-                map.put(SharedPrefManager.KEY_USERNAME,SharedPrefManager.getInstance(applicationContext).getUsername());
+                map.put(KEY_USERNAME, SharedPrefManager.getInstance(applicationContext).getUsername());
                 return map;
             }
         };
@@ -101,7 +108,7 @@ public class SurveySync {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map= new HashMap<String,String>();
-                map.put(SharedPrefManager.KEY_USERNAME,SharedPrefManager.getInstance(applicationContext).getUsername());
+                map.put(KEY_USERNAME, SharedPrefManager.getInstance(applicationContext).getUsername());
                 ResponseRequest responseRequest=new ResponseRequest();
                 responseRequest.setData(applicationContext);
                 map.put(ResponseRequest.KEY_RESPONE_REQUEST,new Gson().toJson(responseRequest,ResponseRequest.class));
@@ -133,7 +140,7 @@ public class SurveySync {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> map=new HashMap<>();
-                map.put(SharedPrefManager.KEY_USERNAME,SharedPrefManager.getInstance(applicationContext).getUsername());
+                map.put(KEY_USERNAME, SharedPrefManager.getInstance(applicationContext).getUsername());
                 QuestionRequest questionRequest=new QuestionRequest();
                 questionRequest.setData(surveys);
                 map.put(QuestionRequest.KEY_QUESTION_REQUEST,new Gson().toJson(questionRequest,QuestionRequest.class));
@@ -144,6 +151,35 @@ public class SurveySync {
         requestHandler.addToRequestQueue(stringRequest);
     }
 
+
+    public void checkLogin(final LoginRequest loginRequest, final ConnectionCallback connectionCallback) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_LOGIN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                LoginResult loginResult = new Gson().fromJson(response, LoginResult.class);
+                if (loginResult.getSuccess().equals(SUCCESS_CONN)) {
+                    connectionCallback.onSuccess();
+                } else {
+                    connectionCallback.onFailure();
+                }
+            }
+        },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        connectionCallback.onFailure();
+                    }
+                }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put(KEY_USERNAME, loginRequest.getUsername());
+                map.put(KEY_PASSWORD, loginRequest.getPassword());
+                return map;
+            }
+        };
+        requestHandler.addToRequestQueue(stringRequest);
+    }
 
     public interface ConnectionCallback{
         void onSuccess();

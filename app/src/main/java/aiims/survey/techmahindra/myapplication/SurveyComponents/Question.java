@@ -33,6 +33,18 @@ public class Question {
     }
 
 
+    public boolean isPresentInOptions(String checkOption) {
+        if (options == null) return false;
+        for (int i = 0; i < options.length; i++) {
+            if (checkOption.equals(options[i]))
+                return true;
+        }
+        return false;
+    }
+
+    public AnsweredQuestion getAnsweredQuestion() {
+        return new AnsweredQuestion(this);
+    }
 
     /*
     * Getters and Setters

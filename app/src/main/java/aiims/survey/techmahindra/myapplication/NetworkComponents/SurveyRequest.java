@@ -2,6 +2,8 @@ package aiims.survey.techmahindra.myapplication.NetworkComponents;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import aiims.survey.techmahindra.myapplication.Database.SurveyDbOpenHelper;
 import aiims.survey.techmahindra.myapplication.Database.SurveyTable;
 import aiims.survey.techmahindra.myapplication.SurveyComponents.Survey;
@@ -33,7 +35,8 @@ public class SurveyRequest {
     //TODO: CALL THIS WHENEVER DATA NEEDS TO BE SET
     public void setData(Context context){
         SurveyTable surveyTable=new SurveyDbOpenHelper(context).getSurveyTable();
-        Survey surveys[]= (Survey[]) surveyTable.getEverySurveys().toArray();
+        ArrayList<Survey> als = surveyTable.getEverySurveys();
+        Survey surveys[] = als.toArray(new Survey[als.size()]);
         int length=surveys.length;
         sIds=new String[length];
         languages=new String[length];

@@ -1,6 +1,16 @@
 package aiims.survey.techmahindra.myapplication.SurveyComponents;
 
+import android.content.Context;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
+
+import aiims.survey.techmahindra.myapplication.Database.QuestionTable;
+import aiims.survey.techmahindra.myapplication.Database.SurveyDbOpenHelper;
 
 /**
  * Created by yashjain on 7/4/17.
@@ -9,25 +19,50 @@ import java.util.ArrayList;
 public class ActiveSurvey  extends Survey{
 
     private AnsweredQuestion[] answeredQuestions;
-    private Response response;
     private ResponderInfo responderInfo;
+    @Expose
+    private int pageQuestionCount[][];
+    @Expose
+    private int totalQuestion;
 
-    public ActiveSurvey(Survey survey){
+
+    public ActiveSurvey(Survey survey, Context context) {
         super(survey);
-        //TODO: Find Questions from DB and set answeredQuestions!!!
+        loadAnsweredQuestions(context);
     }
 
-    public void setQuestions(){
-        //TODO: Find Questions from DB and set answerQuestions!!!
+
+    public ActiveSurvey() {
+    }
+
+    public void loadAnsweredQuestions(Context context) {
+        QuestionTable questionTable = new SurveyDbOpenHelper(context).getQuestionTable();
+        ArrayList<Question> questions = questionTable.getQuestions(this);
+        Log.i("Question ArrayList ", new Gson().toJson(questions));
+        Question question[] = questions.toArray(new Question[questions.size()]);
+        answeredQuestions = new AnsweredQuestion[question.length];
+        for (int i = 0; i < question.length; i++) {
+            answeredQuestions[i] = new AnsweredQuestion();
+            answeredQuestions[i].setQuestion(question[i]);
+        }
+        this.pageQuestionCount = questionTable.getTotalQuestions(this);
+        this.totalQuestion = 0;
+        for (int i = 0; i < pageQuestionCount.length; i++) {
+            this.totalQuestion += pageQuestionCount[i][0];
+        }
+    }
+
+    public int getTotalPages() {
+        return pageQuestionCount.length;
     }
 
     public void saveResponse(){
 
     }
 
-    public ActiveSurvey(){
+    public boolean isFinalPage(int pageNo) {
+        return pageQuestionCount.length - 1 == pageNo;
     }
-
 
     public AnsweredQuestion[] getQuestionsForPage(int pageNo){
         if(pageNo<1&&pageNo>this.totalPage) return null;
@@ -37,7 +72,7 @@ public class ActiveSurvey  extends Survey{
                 questionList.add(answeredQuestions[i]);
             }
         }
-        return (AnsweredQuestion[]) questionList.toArray();
+        return questionList.toArray(new AnsweredQuestion[questionList.size()]);
     }
 
 
@@ -49,19 +84,28 @@ public class ActiveSurvey  extends Survey{
         this.answeredQuestions = answeredQuestions;
     }
 
-    public Response getResponse() {
-        return response;
-    }
-
-    public void setResponse(Response response) {
-        this.response = response;
-    }
-
     public ResponderInfo getResponderInfo() {
         return responderInfo;
     }
 
     public void setResponderInfo(ResponderInfo responderInfo) {
         this.responderInfo = responderInfo;
+    }
+
+
+    public int[][] getPageQuestionCount() {
+        return pageQuestionCount;
+    }
+
+    public void setPageQuestionCount(int[][] pageQuestionCount) {
+        this.pageQuestionCount = pageQuestionCount;
+    }
+
+    public int getTotalQuestion() {
+        return totalQuestion;
+    }
+
+    public void setTotalQuestion(int totalQuestion) {
+        this.totalQuestion = totalQuestion;
     }
 }

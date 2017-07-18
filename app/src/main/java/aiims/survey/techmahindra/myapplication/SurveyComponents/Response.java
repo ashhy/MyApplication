@@ -1,6 +1,7 @@
 package aiims.survey.techmahindra.myapplication.SurveyComponents;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 
 /**
  * Created by yashjain on 7/4/17.
@@ -109,6 +110,14 @@ public class Response {
 
     public void setResult(JSONArray result) {
         this.result = result;
+    }
+
+    public void setResult(String result) {
+        try {
+            this.result = new JSONArray(result);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public ResponderInfo getResponderInfo() {

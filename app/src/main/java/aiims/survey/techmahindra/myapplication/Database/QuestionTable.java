@@ -48,6 +48,7 @@ public class QuestionTable implements DbConstants{
         return db.insertOrThrow(TABLE_QUESTION,null,values);
     }
 
+
     public boolean isPresent(Question question){
         String projection[]={COL_SID};
         String selection=COL_SID+" = ? AND "+COL_PAGE+" = ? AND "+COL_LANGUAGE+" = ? AND "+COL_QNO+" = ?";
@@ -80,7 +81,7 @@ public class QuestionTable implements DbConstants{
     public ArrayList<Question> getQuestions(Survey survey){
         String projection[]={COL_SID,COL_QNO,COL_QTEXT,COL_MULTISELECT,COL_LANGUAGE,COL_OPTIONS,COL_PAGE,COL_RESOLVER};
         String selection=COL_SID+"= ? AND "+COL_LANGUAGE+"= ?";
-        String sortOrder=COL_QNO+" ASC ";
+        String sortOrder = COL_PAGE + " ASC " + " , " + COL_QNO + " ASC ";
         Cursor cursor=db.query(TABLE_QUESTION,projection,selection,new String[]{String.valueOf(survey.getsId()),survey.getLanguage()},null,null,sortOrder);
         ArrayList<Question> questionList=new ArrayList<>();
         Gson gson=new Gson();
@@ -89,7 +90,7 @@ public class QuestionTable implements DbConstants{
             q.setsId(cursor.getString(cursor.getColumnIndexOrThrow(COL_SID)));
             q.setqNo(cursor.getInt(cursor.getColumnIndexOrThrow(COL_QNO)));
             q.setqText(cursor.getString(cursor.getColumnIndexOrThrow(COL_QTEXT)));
-            q.setMultiSelect(Boolean.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COL_MULTISELECT))));
+            q.setMultiSelect(cursor.getInt(cursor.getColumnIndexOrThrow(COL_MULTISELECT)) > 0);
             q.setLanguage(cursor.getString(cursor.getColumnIndexOrThrow(COL_LANGUAGE)));
             q.setOptions(gson.fromJson(cursor.getString(cursor.getColumnIndexOrThrow(COL_OPTIONS)),String[].class));
             q.setPageNo(cursor.getInt(cursor.getColumnIndexOrThrow(COL_PAGE)));
@@ -111,7 +112,7 @@ public class QuestionTable implements DbConstants{
             q.setsId(cursor.getString(cursor.getColumnIndexOrThrow(COL_SID)));
             q.setqNo(cursor.getInt(cursor.getColumnIndexOrThrow(COL_QNO)));
             q.setqText(cursor.getString(cursor.getColumnIndexOrThrow(COL_QTEXT)));
-            q.setMultiSelect(Boolean.valueOf(cursor.getString(cursor.getColumnIndexOrThrow(COL_MULTISELECT))));
+            q.setMultiSelect(cursor.getInt(cursor.getColumnIndexOrThrow(COL_MULTISELECT)) > 0);
             q.setLanguage(cursor.getString(cursor.getColumnIndexOrThrow(COL_LANGUAGE)));
             q.setOptions(gson.fromJson(cursor.getString(cursor.getColumnIndexOrThrow(COL_OPTIONS)),String[].class));
             q.setPageNo(cursor.getInt(cursor.getColumnIndexOrThrow(COL_PAGE)));
@@ -120,4 +121,20 @@ public class QuestionTable implements DbConstants{
         }
         return questionList;
     }
+
+    public int[][] getTotalQuestions(Survey survey) {
+        String query = " SELECT " + COL_PAGE + "  , COUNT(" + COL_PAGE + ") " +
+                " FROM " + TABLE_QUESTION +
+                " WHERE " + COL_SID + " = '" + survey.getsId() + "' AND " + COL_LANGUAGE + " = '" + survey.getLanguage() + "' "
+                + " GROUP BY " + COL_PAGE
+                + " ORDER BY " + COL_PAGE + " ASC";
+        Cursor cursor = db.rawQuery(query, null);
+        int[][] totalPageNo = new int[cursor.getCount()][1];
+        int i = 0;
+        while (cursor.moveToNext()) {
+            totalPageNo[i][0] = cursor.getInt(1);
+        }
+        return totalPageNo;
+    }
+
 }

@@ -33,7 +33,7 @@ public class QuestionRequest {
     }
 
     public void setData(ArrayList<Survey> surveys){
-        setData((Survey[]) surveys.toArray());
+        setData(surveys.toArray(new Survey[surveys.size()]));
     }
 
     public String[] getsId() {

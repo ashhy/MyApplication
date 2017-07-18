@@ -18,6 +18,7 @@ public class SurveyDbOpenHelper extends SQLiteOpenHelper {
 
     public SurveyDbOpenHelper(Context context) {
         super(context, DbConstants.DB_NAME, null, DbConstants.DB_VERSION);
+        setUpDb();
     }
 
 
