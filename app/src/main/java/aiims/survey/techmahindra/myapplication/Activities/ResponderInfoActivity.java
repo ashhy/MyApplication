@@ -2,6 +2,7 @@ package aiims.survey.techmahindra.myapplication.Activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -96,15 +97,22 @@ public class ResponderInfoActivity extends AppCompatActivity implements View.OnC
     }
 
     private boolean areResultsValid() {
+        return !(gender.getCheckedRadioButtonId() == -1 ||
+                fName.getText().toString().equals("") ||
+                lName.getText().toString().equals("") ||
+                weight.getText().toString().equals("") ||
+                height.getText().equals("") ||
+                address.getText().equals("") ||
+                age.getText().equals(""));
 
-        //TODO Check the values
-        return true;
     }
 
     @Override
     public void onClick(View view) {
         if (areResultsValid()) {
             startIntentForQuestionListActivity();
+        } else {
+            Snackbar.make(findViewById(R.id.riaLL), getString(R.string.riaEmptyFields), Snackbar.LENGTH_LONG).show();
         }
     }
 }

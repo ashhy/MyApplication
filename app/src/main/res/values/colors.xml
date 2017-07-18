@@ -45,5 +45,6 @@
     <color name="riaSubmitText">#FFFFFF</color>
     <color name="riaSubmitBckg">#0ABC0A</color>
     <color name="riaGenderTint">#5A5AFF</color>
+    <color name="riaTvTextColor">#000000</color>
 
 </resources>

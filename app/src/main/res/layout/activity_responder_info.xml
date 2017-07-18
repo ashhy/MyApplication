@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/riaLL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/responderInfoActivityBackground"
@@ -40,6 +41,18 @@
                         android:textColor="@color/riaResponderInfoText"
                         android:textSize="@dimen/riaResponderInfoTextSize" />
 
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/riaTvFName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/riaTvPadding"
+                        android:text="@string/riaFName"
+                        android:textColor="@color/riaTvTextColor"
+                        android:textSize="@dimen/riaTvTextSize" />
+
+
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/riaFName"
                         android:layout_width="match_parent"
@@ -58,6 +71,17 @@
 
                         <requestFocus />
                     </android.support.v7.widget.AppCompatEditText>
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/riaTvLName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/riaTvPadding"
+                        android:text="@string/riaLName"
+                        android:textColor="@color/riaTvTextColor"
+                        android:textSize="@dimen/riaTvTextSize" />
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/riaLName"
@@ -132,6 +156,17 @@
 
                     </RadioGroup>
 
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/riaTvWeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/riaTvPadding"
+                        android:text="@string/riaWeight"
+                        android:textColor="@color/riaTvTextColor"
+                        android:textSize="@dimen/riaTvTextSize" />
+
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/riaWeight"
                         android:layout_width="match_parent"
@@ -139,7 +174,7 @@
                         android:backgroundTint="@color/riaEtBackgroundTint"
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        android:hint="@string/riaWeight"
+                        android:hint="@string/riaEtWeight"
                         android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
                         android:nextFocusForward="@+id/riaHeight"
@@ -148,6 +183,17 @@
                         android:textColorHint="@color/riaEtHintColor"
                         android:textSize="@dimen/riaEtTextSize" />
 
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/riaTvHeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/riaTvPadding"
+                        android:text="@string/riaHeight"
+                        android:textColor="@color/riaTvTextColor"
+                        android:textSize="@dimen/riaTvTextSize" />
+
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/riaHeight"
                         android:layout_width="match_parent"
@@ -155,7 +201,7 @@
                         android:backgroundTint="@color/riaEtBackgroundTint"
                         android:clickable="true"
                         android:foreground="?android:attr/selectableItemBackground"
-                        android:hint="@string/riaHeight"
+                        android:hint="@string/riaTvHeight"
                         android:imeOptions="actionNext"
                         android:inputType="numberDecimal"
                         android:nextFocusForward="@+id/riaBloodGroup"
@@ -164,6 +210,17 @@
                         android:textColorHint="@color/riaEtHintColor"
                         android:textSize="@dimen/riaEtTextSize" />
 
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/riaTvBloodGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/riaTvPadding"
+                        android:text="@string/riaTvBloodGroup"
+                        android:textColor="@color/riaTvTextColor"
+                        android:textSize="@dimen/riaTvTextSize" />
 
                     <android.support.v7.widget.AppCompatSpinner
                         android:id="@+id/riaBloodGroup"
@@ -176,6 +233,17 @@
                         android:textColor="@color/riaEtTextColor"
                         android:textColorHint="@color/riaEtHintColor"
                         android:textSize="@dimen/riaEtTextSize" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/riaTvAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/riaTvPadding"
+                        android:text="@string/riaAddress"
+                        android:textColor="@color/riaTvTextColor"
+                        android:textSize="@dimen/riaTvTextSize" />
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/riaAddress"
@@ -192,6 +260,17 @@
                         android:textColor="@color/riaEtTextColor"
                         android:textColorHint="@color/riaEtHintColor"
                         android:textSize="@dimen/riaEtTextSize" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/riaTvAge"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:padding="@dimen/riaTvPadding"
+                        android:text="@string/riaAge"
+                        android:textColor="@color/riaTvTextColor"
+                        android:textSize="@dimen/riaTvTextSize" />
 
                     <android.support.v7.widget.AppCompatEditText
                         android:id="@+id/riaAge"

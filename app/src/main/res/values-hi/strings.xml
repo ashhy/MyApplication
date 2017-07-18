@@ -65,6 +65,11 @@
     <string name="riaAddress">पता</string>
     <string name="riaAge">आयु</string>
     <string name="riaSubmit">जमा करें</string>
+    <string name="riaEmptyFields">कृपया सभी फ़ील्ड दर्ज करें</string>
+    <string name="riaEtWeight">किग्रा</string>
+    <string name="riaTvHeight">पैर का पंजा</string>
+    <string name="riaTvBloodGroup">रक्त समूह</string>
+
 
     <!--Menu Survey List-->
     <string name="menuSurveyListSync">सिंक</string>

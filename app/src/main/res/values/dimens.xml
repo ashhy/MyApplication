@@ -46,4 +46,6 @@
     <dimen name="riaSubmitPadding">10dp</dimen>
     <dimen name="riaSubmitTextSize">30sp</dimen>
     <dimen name="riaGenderPadding">10dp</dimen>
+    <dimen name="riaTvPadding">10dp</dimen>
+    <dimen name="riaTvTextSize">20sp</dimen>
 </resources>

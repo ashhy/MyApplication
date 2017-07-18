@@ -65,6 +65,10 @@
     <string name="riaAddress">Address</string>
     <string name="riaAge">Age</string>
     <string name="riaSubmit">Submit</string>
+    <string name="riaEmptyFields">Please Enter all the Fields</string>
+    <string name="riaEtWeight">Kgs</string>
+    <string name="riaTvHeight">Feet</string>
+    <string name="riaTvBloodGroup">Blood Group</string>
     <string-array name="bloodGroup">
         <item>A+</item>
         <item>A-</item>
