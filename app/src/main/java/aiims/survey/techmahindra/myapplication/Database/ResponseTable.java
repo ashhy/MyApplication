@@ -71,6 +71,14 @@ public class ResponseTable implements DbConstants{
         return db.delete(TABLE_RESPONSE,whereClause,new String[]{String.valueOf(rId)});
     }
 
+    public int getCount() {
+        String query = "SELECT COUNT(" + COL_RID + ") FROM " + TABLE_RESPONSE +
+                " WHERE " + COL_RID + " = '" + EXPORTED + "' OR " + COL_RID + " = '" + OFFLINE + "'";
+        Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToNext();
+        return cursor.getInt(0);
+    }
+
     public int updateResponse(Response response){
         ResponderInfo responderInfo=response.getResponderInfo();
         ContentValues values=new ContentValues();

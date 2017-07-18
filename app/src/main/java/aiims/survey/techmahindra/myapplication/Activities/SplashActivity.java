@@ -50,12 +50,14 @@ import aiims.survey.techmahindra.myapplication.SurveyComponents.Survey;
 
 public class SplashActivity extends AppCompatActivity {
 
+
     private static final int PERMISSIONS_REQUEST_CODE = 1;
     private static final String[] permissionRequired =
             {Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE};
+    public static boolean isOnline;
     private ImageView splashImage;
     private Animation fadeIn, fadeOut;
     private ProgressBar progressBar;
@@ -122,6 +124,7 @@ public class SplashActivity extends AppCompatActivity {
         splashImage.startAnimation(fadeIn);
 
     }
+
 
     protected void setPermissions() {
 
@@ -197,6 +200,17 @@ public class SplashActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isOnline = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isOnline = false;
+    }
 
     private class AppInitializer extends AsyncTask<Void, Void, Void> {
 
@@ -299,7 +313,6 @@ public class SplashActivity extends AppCompatActivity {
                     question.setMode(i % 3 == 0 ? DbConstants.OR : DbConstants.AND);
                     question.setPageNo(i / 5 < 1 ? 0 : 1);
                     question.setOptions(new String[]{"विकल्प टेक्स्ट 1", "विकल्प टेक्स्ट 2", "विकल्प टेक्स्ट 3", "विकल्प टेक्स्ट 4"});
-                    questionTable.addQuestion(question);
                     questions.add(question);
                 }
 

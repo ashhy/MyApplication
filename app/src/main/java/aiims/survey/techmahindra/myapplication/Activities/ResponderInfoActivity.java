@@ -108,6 +108,18 @@ public class ResponderInfoActivity extends AppCompatActivity implements View.OnC
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        SplashActivity.isOnline = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SplashActivity.isOnline = false;
+    }
+
+    @Override
     public void onClick(View view) {
         if (areResultsValid()) {
             startIntentForQuestionListActivity();

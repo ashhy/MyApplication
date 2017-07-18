@@ -170,6 +170,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
     @Override
     protected void onPause() {
         super.onPause();
+        SplashActivity.isOnline = false;
         LocationFinder.stopLocationUpdates();
     }
 
@@ -177,6 +178,7 @@ public class QuestionListActivity extends AppCompatActivity implements View.OnCl
     protected void onResume() {
         super.onResume();
         LocationFinder.startLocationUpdates();
+        SplashActivity.isOnline = true;
     }
 
     private void generateResponse() {

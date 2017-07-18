@@ -68,6 +68,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SplashActivity.isOnline = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SplashActivity.isOnline = true;
+    }
+
     private boolean validateLoginCredentials() {
         return true;
     }

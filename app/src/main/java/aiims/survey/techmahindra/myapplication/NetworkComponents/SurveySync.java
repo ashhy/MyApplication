@@ -84,6 +84,12 @@ public class SurveySync {
 
     public void syncResponse(final ConnectionCallback connectionCallback){
 
+        ResponseTable responseTable = new SurveyDbOpenHelper(applicationContext).getResponseTable();
+        if (responseTable.getCount() < 1) {
+            connectionCallback.onSuccess();
+            return;
+        }
+
         ResponseRequest responseRequest=new ResponseRequest();
         responseRequest.setData(applicationContext);
         if(responseRequest.getTotalResponses()<=0)return;

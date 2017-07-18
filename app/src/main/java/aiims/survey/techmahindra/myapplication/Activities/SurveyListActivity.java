@@ -57,6 +57,7 @@ public class SurveyListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        SplashActivity.isOnline = true;
         Locale locale = new Locale(SharedPrefManager.getLanguage(this));
         Locale.setDefault(locale);
         Configuration config = new Configuration();
@@ -134,6 +135,13 @@ public class SurveyListActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SplashActivity.isOnline = false;
     }
 
     private void setSurveyListAdapter() {
